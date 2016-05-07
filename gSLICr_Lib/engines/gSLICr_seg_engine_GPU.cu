@@ -50,10 +50,10 @@ seg_engine_GPU::seg_engine_GPU(const settings& in_settings) : seg_engine(in_sett
 	{
 		spixel_size = in_settings.spixel_size;
 	}
-	
+
 	int spixel_per_col = (int)ceil(in_settings.img_size.x / spixel_size);
 	int spixel_per_row = (int)ceil(in_settings.img_size.y / spixel_size);
-	
+
 	Vector2i map_size = Vector2i(spixel_per_col, spixel_per_row);
 	spixel_map = new SpixelMap(map_size, true, true);
 
@@ -71,8 +71,8 @@ seg_engine_GPU::seg_engine_GPU(const settings& in_settings) : seg_engine(in_sett
 		max_color_dist = 5.0f / (1.7321f * 255);
 		break;
 	case XYZ:
-		max_color_dist = 5.0f / 1.7321f; 
-		break; 
+		max_color_dist = 5.0f / 1.7321f;
+		break;
 	case CIELAB:
 		max_color_dist = 15.0f / (1.7321f * 128);
 		break;
@@ -170,7 +170,7 @@ void gSLICr::engines::seg_engine_GPU::Draw_Segmentation_Result(UChar4Image* out_
 	Vector4u* inimg_ptr = source_img->GetData(MEMORYDEVICE_CUDA);
 	Vector4u* outimg_ptr = out_img->GetData(MEMORYDEVICE_CUDA);
 	int* idx_img_ptr = idx_img->GetData(MEMORYDEVICE_CUDA);
-	
+
 	Vector2i img_size = idx_img->noDims;
 
 	dim3 blockSize(BLOCK_DIM, BLOCK_DIM);
@@ -228,7 +228,7 @@ __global__ void Update_Cluster_Center_device(const Vector4f* inimg, const int* i
 	__shared__ Vector4f color_shared[BLOCK_DIM*BLOCK_DIM];
 	__shared__ Vector2f xy_shared[BLOCK_DIM*BLOCK_DIM];
 	__shared__ int count_shared[BLOCK_DIM*BLOCK_DIM];
-	__shared__ bool should_add; 
+	__shared__ bool should_add;
 
 	color_shared[local_id] = Vector4f(0, 0, 0, 0);
 	xy_shared[local_id] = Vector2f(0, 0);
@@ -250,7 +250,7 @@ __global__ void Update_Cluster_Center_device(const Vector4f* inimg, const int* i
 	if (x_offset < spixel_size * 3 && y_offset < spixel_size * 3)
 	{
 		// compute the start of the search window
-		int x_start = blockIdx.x * spixel_size - spixel_size;	
+		int x_start = blockIdx.x * spixel_size - spixel_size;
 		int y_start = blockIdx.y * spixel_size - spixel_size;
 
 		int x_img = x_start + x_offset;
@@ -340,4 +340,3 @@ __global__ void Enforce_Connectivity_device(const int* in_idx_img, int* out_idx_
 
 	supress_local_lable(in_idx_img, out_idx_img, img_size, x, y);
 }
-

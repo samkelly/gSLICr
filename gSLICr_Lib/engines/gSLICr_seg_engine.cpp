@@ -2,6 +2,7 @@
 
 #pragma once
 #include "gSLICr_seg_engine.h"
+#include <iostream>
 
 using namespace std;
 using namespace gSLICr;
@@ -39,7 +40,9 @@ void seg_engine::Perform_Segmentation(UChar4Image* in_img)
 
 	if(gSLICr_settings.do_enforce_connectivity) Enforce_Connectivity();
 	cudaThreadSynchronize();
+	gSLICr::objects::spixel_info *spixel_list = spixel_map->GetData(MEMORYDEVICE_CUDA);
+	for(int i = 0; i < 5; i ++) {
+		gSLICr::objects::spixel_info *info = &spixel_list[i];
+		cout << info->id << endl;
+	}
 }
-
-
-
