@@ -89,14 +89,27 @@ int main(int argc, char** argv)
 	cout << "performing segmentation..." << endl;
 	gSLICr_engine->Process_Frame(in_img);
 	cout << "drawing segmentation result" << endl;
+
+	// get pointer to internal spixel map
+	gSLICr::SpixelMap *spixel_map = gSLICr_engine->slic_seg_engine->spixel_map;
+	gSLICr::objects::spixel_info *spixel_list = spixel_map->GetData(MEMORYDEVICE_CUDA);
+	/*for(int i = 0; i < 100; i ++) {
+		gSLICr::objects::spixel_info *info = &spixel_list[i];
+		cout << info->id << endl;
+		cout << info->color_info << endl;
+		cout << info->no_pixels << endl;
+		cout << endl;
+	}*/
+
 	gSLICr_engine->Draw_Segmentation_Result(out_img);
-	cout << "copying segmentation result to out image..." << endl;
+	cout << "writing segmentation result to image..." << endl;
 	gSLICr_engine->Write_Seg_Res_To_PGM(output_image_path);
 	Size s(my_settings.img_size.x, my_settings.img_size.y);
 	Mat boundary_draw_frame;
 	boundary_draw_frame.create(s, CV_8UC3);
 	load_image(out_img, boundary_draw_frame);
 	imwrite(output_image_path, boundary_draw_frame);
+
 	//namedWindow("segmentation", CV_WINDOW_AUTOSIZE );
 	//imshow("segmentation", out_image);
 

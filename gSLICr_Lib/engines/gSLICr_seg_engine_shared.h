@@ -85,7 +85,7 @@ _CPU_AND_GPU_CODE_ inline void init_cluster_centers_shared(const gSLICr::Vector4
 	out_spixel[cluster_idx].id = cluster_idx;
 	out_spixel[cluster_idx].center = gSLICr::Vector2f((float)img_x, (float)img_y);
 	out_spixel[cluster_idx].color_info = inimg[img_y*img_size.x + img_x];
-	
+
 	out_spixel[cluster_idx].no_pixels = 0;
 }
 
@@ -180,9 +180,9 @@ _CPU_AND_GPU_CODE_ inline void supress_local_lable(const int* in_idx_img, int* o
 
 	// don't suppress boundary
 	if (x <= 1 || y <= 1 || x >= img_size.x - 2 || y >= img_size.y - 2)
-	{ 
+	{
 		out_idx_img[y*img_size.x + x] = clable;
-		return; 
+		return;
 	}
 
 	int diff_count = 0;

@@ -10,11 +10,9 @@ namespace gSLICr
 	{
 		class core_engine
 		{
-		private:
+		public:
 
 			seg_engine* slic_seg_engine;
-
-		public:
 
 			core_engine(const objects::settings& in_settings);
 			~core_engine();
@@ -33,4 +31,3 @@ namespace gSLICr
 		};
 	}
 }
-
