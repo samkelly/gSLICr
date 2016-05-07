@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 project(gSLICr)
-  
+
 IF(MSVC_IDE)
   set(OpenCV_STATIC OFF)
   add_definitions(-D_CRT_SECURE_NO_WARNINGS)
@@ -44,5 +44,5 @@ cuda_add_library(gSLICr_lib
 			OPTIONS -gencode arch=compute_30,code=compute_30)
 target_link_libraries(gSLICr_lib ${CUDA_LIBRARY})
 
-add_executable(demo demo.cpp)
-target_link_libraries(demo gSLICr_lib ${OpenCV_LIBS})
+add_executable(segmenter segmenter.cpp)
+target_link_libraries(segmenter gSLICr_lib ${OpenCV_LIBS})

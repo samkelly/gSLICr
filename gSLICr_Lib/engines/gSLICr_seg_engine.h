@@ -11,7 +11,7 @@ namespace gSLICr
 	{
 		class seg_engine
 		{
-		protected:
+		public:
 
 			// normalizing distances
 			float max_color_dist;
@@ -34,8 +34,6 @@ namespace gSLICr
 			virtual void Update_Cluster_Center() = 0;
 			virtual void Enforce_Connectivity() = 0;
 
-		public:
-
 			seg_engine(const objects::settings& in_settings );
 			virtual ~seg_engine();
 
@@ -49,4 +47,3 @@ namespace gSLICr
 		};
 	}
 }
-
